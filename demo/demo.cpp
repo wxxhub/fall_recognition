@@ -16,6 +16,7 @@ int main()
     std::string module_file = "../snapshot/mobilenet_iter_10000.caffemodel";
     FallRecognition *recog = new FallRecognition(net_prototxt_file, module_file);
     recog->setUseGPU(true);
+    recog->setSlopeRadio(1.5);
 
 	VideoCapture cap("../video/test/test33.mp4");
 
@@ -24,6 +25,7 @@ int main()
 	timer t;
     while (cap.read(image))
     {
+        // resize(image, image, Size(720, 720 * image.rows / image.cols));
 		t.reset();
 		recog->detector(image);
 		t.stop();

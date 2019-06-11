@@ -27,6 +27,7 @@ public:
     void detector(cv::Mat image);
 
     void showResult(cv::Mat img, int wait_key, bool show_all);
+    void setSlopeRadio(float radio);
 
 private:
     caffe::Net<float>* net_;

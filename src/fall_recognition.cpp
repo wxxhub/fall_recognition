@@ -110,17 +110,9 @@ void FallRecognition::detector(Mat image)
         bind_id_->add(up_x, up_y, down_x, down_y, i);
     }
 
-    t.reset();
     bind_id_->match();
-    t.stop();
-    printf("f:");
-    t.show();
 
-    t.reset();
     judge();
-    t.stop();
-    printf("j:");
-    t.show();
 }
 
 void FallRecognition::judge()
@@ -130,13 +122,16 @@ void FallRecognition::judge()
         int up_x, up_y, down_x, down_y;
         int result = bind_id_->getResult(i, up_x, up_y, down_x, down_y);
 
-        if (result == NO_MATCH_ID || result == NONE_STATE || result == INIT_ID)
+        if (result != MATCH_ID)
         {
-            states_[i] = NONE_STATE; 
+            states_[i] = NONE_STATE;
+            if (result == CLEANR_ID)
+                state_judge_[i]->clean();
+                 
             continue;
         }
 
-        states_[i] = state_judge_[i]->getResult(up_x, up_y, down_x, down_y);
+        states_[i] = state_judge_[i]->getResult(up_x, up_y, down_x, down_y, true);
     }
 }
 
@@ -200,6 +195,14 @@ void FallRecognition::showResult(Mat img, int wait_key, bool show_all)
     
     imshow("FallRecognition Result", img);
     cvWaitKey(wait_key);
+}
+
+void FallRecognition::setSlopeRadio(float radio)
+{
+    for (int i = 0; i < state_judge_.size(); ++i)
+    {
+        state_judge_[i]->setSlopeRadio(radio);
+    }
 }
 
 void FallRecognition::wrapInputLayer(std::vector<Mat>* input_channels)

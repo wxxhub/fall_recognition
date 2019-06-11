@@ -14,9 +14,9 @@ const int STAND_UP   = 1;
 const int NONE_STATE = 2;
 
 // slope
-const float STAND_UP_SLOP   = -5;
-const float FALL_DOWN_SLOP  = 5;
-const float HORIZONTAL_SLOP = 1;
+const float STAND_UP_SLOPE   = -5;
+const float FALL_DOWN_SLOPE  = 5;
+const float HORIZONTAL_SLOPE = 1;
 
 class StateJudge
 {
@@ -26,14 +26,16 @@ public:
     ~StateJudge();
 
     void setFPS(int fps);
-    int getResult(int up_x, int up_y, int down_x, int down_y, int img_h = 680, bool show_result = false);
     void clean();
+    void setSlopeRadio(float radio);
+
+    int getResult(int up_x, int up_y, int down_x, int down_y, bool show_result = false, int img_h = 680);
 
     float fittingSlope(std::list<int> data_list);
 private:
     int state_;
     int judge_times_;
-    int judge_size_;
+    int judge_size_;    
 
     std::list<int> up_sites_;
     std::list<int> down_sites_;
@@ -42,6 +44,7 @@ private:
 
     float n_average_x_;
     float x_data_;
+    float slope_radio_;
 
     int judgeFallByTime(int state);
 };

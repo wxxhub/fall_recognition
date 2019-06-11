@@ -9,7 +9,8 @@ StateJudge::StateJudge()
       judge_size_(20),
       judge_times_(0),
       n_average_x_(210),
-      x_data_(665)
+      x_data_(665),
+      slope_radio_(1)
 {
 
 }
@@ -19,6 +20,7 @@ StateJudge::StateJudge(int judge_size)
     state_ = NORMAL;
     judge_size_ = judge_size;
     judge_times_ = 0;
+    slope_radio_ = 1;
 
     float averager_x = (1 + judge_size_) / 2.0;
     float n_square_average_x = judge_size_ * averager_x * averager_x;
@@ -39,15 +41,15 @@ void StateJudge::setFPS(int fps)
 
 }
 
-int StateJudge::getResult(int up_x, int up_y, int down_x, int down_y, int img_h, bool show_result)
+int StateJudge::getResult(int up_x, int up_y, int down_x, int down_y, bool show_result, int img_h)
 {
     ++judge_times_;
 
     // update list
     if (judge_times_ <= judge_size_)
     {
-        up_sites_.push_back(up_x);
-        down_sites_.push_back(up_y);
+        up_sites_.push_back(up_y);
+        down_sites_.push_back(down_y);
         vertical_sites_distance_.push_back(down_y - up_y);
         horizontal_sites_distance_.push_back(down_x - up_x);
         return NORMAL;
@@ -59,29 +61,29 @@ int StateJudge::getResult(int up_x, int up_y, int down_x, int down_y, int img_h,
         vertical_sites_distance_.pop_front();
         horizontal_sites_distance_.pop_front();
 
-        up_sites_.push_back(up_x);
-        down_sites_.push_back(up_y);
+        up_sites_.push_back(up_y);
+        down_sites_.push_back(down_y);
         vertical_sites_distance_.push_back(down_y - up_y);
         horizontal_sites_distance_.push_back(down_x - up_x);
     }
     
-    const float up_slope = fittingSlope(up_sites_);
-    const float veritial_slop = fittingSlope(vertical_sites_distance_);
+    float up_slope = fittingSlope(up_sites_);
+    float veritial_slop = fittingSlope(vertical_sites_distance_);
 
     if (show_result)
     {
-        printf("up_slope: %f\n", up_slope);
+        printf("up_slope: %f\n",up_slope);
         printf("veritial_slop: %f\n", veritial_slop);
         printf("\n");
     }
 
     // judge current state
     int current_state = NORMAL;
-    if (up_slope >= FALL_DOWN_SLOP && veritial_slop <= FALL_DOWN_SLOP)
+    if (up_slope >= FALL_DOWN_SLOPE * slope_radio_ && veritial_slop <= FALL_DOWN_SLOPE * slope_radio_)
     {
         current_state = FALL_DOWN;
     }
-    else if (up_slope <= STAND_UP_SLOP)
+    else if (up_slope <= STAND_UP_SLOPE * slope_radio_)
     {
         current_state = STAND_UP;
     }
@@ -104,6 +106,11 @@ void StateJudge::clean()
     down_sites_.clear();
     vertical_sites_distance_.clear();
     horizontal_sites_distance_.clear();
+}
+
+void StateJudge::setSlopeRadio(float radio)
+{
+    slope_radio_ = radio;
 }
 
 float StateJudge::fittingSlope(std::list<int> data_list)
