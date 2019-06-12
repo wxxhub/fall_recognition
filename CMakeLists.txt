@@ -1,13 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 PROJECT(fall_recognition)
+
 set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
-find_package(OpenCV)
 find_package(Caffe)
 
 include_directories(${Caffe_INCLUDE_DIRS})
 add_definitions(${Caffe_DEFINITIONS})
-
 
 include_directories(
     include

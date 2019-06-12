@@ -1,7 +1,7 @@
 # fall_recognition  
 采用Caffe实现人识别，并实现多目标摔倒识别。
 
-# 使用
+## 使用
 ```shell
 #先配置OpenCV和Caffe
 
