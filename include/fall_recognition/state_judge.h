@@ -1,3 +1,11 @@
+/*
+ * state_judge.h
+ *
+ *  Created on: 2019. 6. 11
+ *      Author: wxx
+ *      E-mail: wxx0520@foxmail.com
+ */
+
 #ifndef _STATE_JUDGE_
 #define _STATE_JUDGE_
 

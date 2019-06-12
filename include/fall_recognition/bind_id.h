@@ -1,3 +1,11 @@
+/*
+ * bind_id.h
+ *
+ *  Created on: 2019. 6. 11
+ *      Author: wxx
+ *      E-mail: wxx0520@foxmail.com
+ */
+
 #ifndef _BIND_ID_
 #define _BIND_ID_
 

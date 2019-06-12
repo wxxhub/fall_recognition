@@ -1,3 +1,11 @@
+/*
+ * timer.h
+ *
+ *  Created on: 2019. 6. 11
+ *      Author: wxx
+ *      E-mail: wxx0520@foxmail.com
+ */
+
 #ifndef _TIMER_HPP_
 #define _TIMER_HPP_
  

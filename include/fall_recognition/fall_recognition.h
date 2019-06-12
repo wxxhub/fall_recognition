@@ -1,3 +1,11 @@
+/*
+ * fall_recognition.h
+ *
+ *  Created on: 2019. 6. 11
+ *      Author: wxx
+ *      E-mail: wxx0520@foxmail.com
+ */
+
 #ifndef _FALL_RECOGNITION_H_
 #define _FALL_RECOGNITION_H_
 
