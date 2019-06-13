@@ -15,18 +15,30 @@ int main()
     std::string net_prototxt_file = "../snapshot/MobileNetSSD_deploy.prototxt";
     std::string module_file = "../snapshot/mobilenet_iter_10000.caffemodel";
     FallRecognition *recog = new FallRecognition(net_prototxt_file, module_file);
+    
     recog->setUseGPU(true);
-    recog->setSlopeRadio(1.5);
-    recog->setFPS(30);
+
+    recog->setSlopeRadio(2.5);
+
+    recog->setFPS(10);
+
+    recog->setWarnTime(1);
 
 	VideoCapture cap("../video/test/test35.mp4");
+    int cap_frame = 30;
 
+    int skip_frame = cap_frame / 10;
     Mat image;
 
 	timer t;
+    int index = 0;
     while (cap.read(image))
     {
-        // resize(image, image, Size(720, 720 * image.rows / image.cols));
+        ++index;
+
+        if (index % skip_frame != 0)
+            continue;
+
 		t.reset();
 		recog->detector(image);
 		t.stop();

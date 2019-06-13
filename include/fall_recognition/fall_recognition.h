@@ -36,6 +36,7 @@ public:
 
     void showResult(cv::Mat img, int wait_key, bool show_all);
     void setSlopeRadio(float radio);
+    void setWarnTime(int second);
 
 private:
     caffe::Net<float>* net_;

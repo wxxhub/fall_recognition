@@ -31,3 +31,8 @@ add_executable(usb_cam_demo demo/usb_cam_demo.cpp)
 target_link_libraries(usb_cam_demo
     ${PROJECT_NAME}
 )
+
+add_executable(skip_frame_test demo/skip_frame_test.cpp)
+target_link_libraries(skip_frame_test
+    ${PROJECT_NAME}
+)

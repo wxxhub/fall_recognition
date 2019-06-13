@@ -55,7 +55,14 @@ void FallRecognition::init(const std::string net_prototxt_file, const std::strin
 
 void FallRecognition::setFPS(int fps)
 {
-    fps_ = fps;
+    if (fps_ != fps)
+    {
+        fps_ = fps;
+        for (int i = 0; i < state_judge_.size(); ++i)
+        {
+            state_judge_[i]->setFPS(fps_);
+        }
+    }
 }
 
 void FallRecognition::setUseGPU(bool open)
@@ -202,6 +209,14 @@ void FallRecognition::setSlopeRadio(float radio)
     for (int i = 0; i < state_judge_.size(); ++i)
     {
         state_judge_[i]->setSlopeRadio(radio);
+    }
+}
+
+void FallRecognition::setWarnTime(int second)
+{
+    for (int i = 0; i < state_judge_.size(); ++i)
+    {
+        state_judge_[i]->setWarnTime(second);
     }
 }
 

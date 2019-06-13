@@ -36,6 +36,7 @@ public:
     void setFPS(int fps);
     void clean();
     void setSlopeRadio(float radio);
+    void setWarnTime(int second);
 
     int getResult(int up_x, int up_y, int down_x, int down_y, bool show_result = false, int img_h = 680);
 
@@ -43,7 +44,13 @@ public:
 private:
     int state_;
     int judge_times_;
-    int judge_size_;    
+    int judge_size_;   
+
+    int fall_frame_num_;
+    int warn_frame_threshold_;
+
+    int warn_time_;
+    int fps_;
 
     std::list<int> up_sites_;
     std::list<int> down_sites_;
@@ -54,6 +61,9 @@ private:
     float x_data_;
     float slope_radio_;
 
+    float up_slope_;
+    float veritial_slop_;
+    
     int judgeFallByTime(int state);
 };
 

@@ -19,3 +19,8 @@ make -j4
 ## 打开摄像头识别
 ./usb_cam_demo
 ```
+
+## API说明
+```cpp
+# 是否使用GPU
+```

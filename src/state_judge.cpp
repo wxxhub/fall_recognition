@@ -4,13 +4,18 @@
 
 using namespace fall_recognition;
 
+// default fps 10
 StateJudge::StateJudge()
     : state_(NORMAL),
       judge_size_(20),
       judge_times_(0),
       n_average_x_(210),
       x_data_(665),
-      slope_radio_(1)
+      slope_radio_(1),
+      fall_frame_num_(0),
+      warn_frame_threshold_(50),
+      warn_time_(5),
+      fps_(10)
 {
 
 }
@@ -21,6 +26,7 @@ StateJudge::StateJudge(int judge_size)
     judge_size_ = judge_size;
     judge_times_ = 0;
     slope_radio_ = 1;
+    warn_time_ = 5;
 
     float averager_x = (1 + judge_size_) / 2.0;
     float n_square_average_x = judge_size_ * averager_x * averager_x;
@@ -38,7 +44,21 @@ StateJudge::~StateJudge()
 
 void StateJudge::setFPS(int fps)
 {
+    if (fps_ != fps)
+    {
+        fps_ = fps;
+        judge_size_ = 2 * fps_;
+        float averager_x = (1 + judge_size_) / 2.0;
+        float n_square_average_x = judge_size_ * averager_x * averager_x;
 
+        n_average_x_ =  averager_x * judge_size_;
+
+        // 1*1+2*2+3*3+...+n*n = n * (n+1) * (2n+1) / 6
+        // x_data_ = E(xi) - n_square_average_x
+        x_data_ = judge_size_ * (judge_size_ + 1) * (2 * judge_size_ + 1) / 6.0 - n_square_average_x;
+
+        warn_frame_threshold_ = warn_time_ * fps_;
+    }
 }
 
 int StateJudge::getResult(int up_x, int up_y, int down_x, int down_y, bool show_result, int img_h)
@@ -67,23 +87,23 @@ int StateJudge::getResult(int up_x, int up_y, int down_x, int down_y, bool show_
         horizontal_sites_distance_.push_back(down_x - up_x);
     }
     
-    float up_slope = fittingSlope(up_sites_);
-    float veritial_slop = fittingSlope(vertical_sites_distance_);
+    float up_slope_ = fittingSlope(up_sites_);
+    float veritial_slop_ = fittingSlope(vertical_sites_distance_);
 
     if (show_result)
     {
-        printf("up_slope: %f\n",up_slope);
-        printf("veritial_slop: %f\n", veritial_slop);
+        printf("up_slope_: %f\n",up_slope_);
+        printf("veritial_slop_: %f\n", veritial_slop_);
         printf("\n");
     }
 
     // judge current state
     int current_state = NORMAL;
-    if (up_slope >= FALL_DOWN_SLOPE * slope_radio_ && veritial_slop <= FALL_DOWN_SLOPE * slope_radio_)
+    if (up_slope_ >= FALL_DOWN_SLOPE * slope_radio_ && veritial_slop_ <= FALL_DOWN_SLOPE * slope_radio_)
     {
         current_state = FALL_DOWN;
     }
-    else if (up_slope <= STAND_UP_SLOPE * slope_radio_)
+    else if (up_slope_ <= STAND_UP_SLOPE * slope_radio_)
     {
         current_state = STAND_UP;
     }
@@ -143,7 +163,26 @@ float StateJudge::fittingSlope(std::list<int> data_list)
     return slope;
 }
 
+void StateJudge::setWarnTime(int second)
+{
+    warn_time_ = second;
+    warn_frame_threshold_ = warn_time_ * fps_;
+}
+
 int StateJudge::judgeFallByTime(int state)
 {
-    return state;
+    ++fall_frame_num_;
+
+    if (state == NORMAL)
+    {
+        fall_frame_num_ = 0;
+        return NORMAL;
+    }
+
+    if (fall_frame_num_ >= warn_frame_threshold_)
+    {
+        return FALL_DOWN;
+    }
+    
+    return FALL_ALARM;
 }
