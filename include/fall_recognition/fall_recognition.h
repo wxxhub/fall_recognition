@@ -34,7 +34,7 @@ public:
     void setUseGPU(bool open);
     void detector(cv::Mat image);
 
-    void showResult(cv::Mat img, int wait_key, bool show_all);
+    void showResult(cv::Mat img, int wait_key = 10, bool show_all = true);
     void setSlopeRadio(float radio);
     void setWarnTime(int second);
 

@@ -2,10 +2,16 @@
 
 #include "fall_recognition/timer.hpp"
 
+#define TIME_DEBUG
+
 using namespace caffe;
 using namespace cv;
 
 using namespace fall_recognition;
+
+#ifdef TIME_DEBUG
+timer time_debug;
+#endif /* TIME_DEBUG */ 
 
 FallRecognition::FallRecognition(const std::string net_prototxt_file, const std::string module_file)
     : mean_value_(127.5),
@@ -115,11 +121,29 @@ void FallRecognition::detector(Mat image)
         int down_x = static_cast<int>(detection[5] * image.cols);
         int down_y = static_cast<int>(detection[6] * image.rows);
         bind_id_->add(up_x, up_y, down_x, down_y, i);
-    }
+    }   
+
+#ifdef TIME_DEBUG
+    time_debug.reset();
+#endif /* TIME_DEBUG */ 
 
     bind_id_->match();
 
+#ifdef TIME_DEBUG
+    time_debug.stop();
+    printf("match time: %fms", time_debug.elapsed());
+#endif /* TIME_DEBUG */ 
+
+#ifdef TIME_DEBUG
+    time_debug.reset();
+#endif /* TIME_DEBUG */ 
+
     judge();
+
+#ifdef TIME_DEBUG
+    time_debug.stop();
+    printf("judge time: %fms", time_debug.elapsed());
+#endif /* TIME_DEBUG */ 
 }
 
 void FallRecognition::judge()
