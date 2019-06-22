@@ -84,7 +84,7 @@ void BindID::match()
                 continue;
             }
 
-            if (!ifIntersection(id_pools_[i]->rectangle, iter->rectangle))
+            if (!ifIntersection(id_pools_[i]->rectangle, iter->rectangle) && id_pools_[i]->empty)
             {
                 flag = -1;
                 continue;
@@ -98,7 +98,7 @@ void BindID::match()
                  (area_error1 > must_area_error_ && area_error0 > filter_area_error_))
             {
                 // 如果id池中已经有目标， 比较大小， 没有目标则丢进id池
-                if (id_pools_[i]->origin_id != INIT_ID)
+                if (id_pools_[i]->origin_id != INIT_ID && id_pools_[i]->origin_id != CLEANR_ID)
                 {
                     int origion_area = (id_pools_[i]->rectangle.down_x - id_pools_[i]->rectangle.up_x)
                                        *(id_pools_[i]->rectangle.down_y - id_pools_[i]->rectangle.up_y);

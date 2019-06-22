@@ -36,3 +36,8 @@ add_executable(skip_frame_test demo/skip_frame_test.cpp)
 target_link_libraries(skip_frame_test
     ${PROJECT_NAME}
 )
+
+add_executable(no_bn_demo demo/no_bn_demo.cpp)
+target_link_libraries(no_bn_demo
+    ${PROJECT_NAME}
+)

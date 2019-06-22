@@ -49,3 +49,9 @@ void setWarnTime(int second);
  */
 void showResult(cv::Mat img, int wait_key, bool show_all);
 ```
+
+## 识别加速
+> 合并bn层，提高模型运行速度，使用MobileNet-SSD作者的脚本将bn层合并到了卷积层中，相当于bn的计算时间就被节省了，识别时间从110ms下降到64ms左右。
+
+## 测试环境
+> i5-6300HQ + GTX-950M + Ubantu16 

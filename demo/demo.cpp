@@ -19,7 +19,7 @@ int main()
     recog->setSlopeRadio(1.5);
     recog->setFPS(30);
 
-	VideoCapture cap("../video/test/test35.mp4");
+	VideoCapture cap("../video/test/test34.mp4");
 
     Mat image;
 
@@ -32,7 +32,8 @@ int main()
 		t.stop();
 		t.show();
 
-		recog->showResult(image, 10, true);
+        recog->showResult(image);
+		// recog->showNoIdBindResult(image, 10);
     }
     
     return 0;

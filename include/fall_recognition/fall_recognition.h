@@ -35,6 +35,7 @@ public:
     void detector(cv::Mat image);
 
     void showResult(cv::Mat img, int wait_key = 10, bool show_all = true);
+    void showNoIdBindResult(cv::Mat img, int wait_key = 10);
     void setSlopeRadio(float radio);
     void setWarnTime(int second);
 

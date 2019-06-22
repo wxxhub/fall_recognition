@@ -228,6 +228,27 @@ void FallRecognition::showResult(Mat img, int wait_key, bool show_all)
     cvWaitKey(wait_key);
 }
 
+void FallRecognition::showNoIdBindResult(cv::Mat img, int wait_key)
+{
+    for (int i = 0; i < detections_.size(); ++i)
+    {
+        int up_x = static_cast<int>(detections_[i][3] * img.cols);
+        int up_y = static_cast<int>(detections_[i][4] * img.rows);
+        int down_x = static_cast<int>(detections_[i][5] * img.cols);
+        int down_y = static_cast<int>(detections_[i][6] * img.rows);
+
+        char score[8];
+        sprintf(score, "ID:%d", i);
+        putText(img, score, Point(up_x, up_y), FONT_HERSHEY_COMPLEX, 0.6, Scalar(255, 255, 255));
+
+
+        rectangle(img,  Point(up_x, up_y),  Point(down_x, down_y), Scalar(0, 0, 255));
+    }
+
+    imshow("showNoIdBindResult", img);
+    cvWaitKey(wait_key);
+}
+
 void FallRecognition::setSlopeRadio(float radio)
 {
     for (int i = 0; i < state_judge_.size(); ++i)
