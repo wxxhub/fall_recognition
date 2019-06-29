@@ -36,3 +36,8 @@ add_executable(skip_frame_test demo/skip_frame_test.cpp)
 target_link_libraries(skip_frame_test
     ${PROJECT_NAME}
 )
+
+add_executable(depwise_convolution demo/depwise_convolution.cpp)
+target_link_libraries(depwise_convolution
+    ${PROJECT_NAME}
+)

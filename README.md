@@ -32,8 +32,7 @@ void setFPS(int fps);
 void detector(cv::Mat image);
 
 /*  拟合斜率乘的一个比例。
- *  该比例越小，对摔倒越敏感。
- *  当帧率比较大时， 摔倒出现的斜率变小， 应该适当减小该系数。
+ *  该比例系数越小，对摔倒越敏感。
  */
 void setSlopeRadio(float radio);
 
@@ -55,7 +54,15 @@ void showNoIdBindResult(cv::Mat img, int wait_key = 10);
 ```
 
 ## 识别加速
-> 合并bn层，提高模型运行速度，使用MobileNet-SSD作者的脚本将bn层合并到了卷积层中，相当于bn的计算时间就被节省了，识别时间从110ms下降到64ms左右。使用深度卷积后时间下降至21ms。
+> 合并bn层，提高模型运行速度，使用MobileNet-SSD作者的脚本将bn层合并到了卷积层中，相当于bn的计算时间就被节省了，识别时间从110ms下降到64ms左右。使用[深度卷积](#使用深度卷积)后时间下降至21ms。
 
 ## 测试环境
 > i5-6300HQ + GTX-950M + Ubantu16 
+
+## 使用深度卷积
+```shell
+git clone https://github.com/yonghenglh6/DepthwiseConvolution.git
+
+# 将DepthwiseConvolution/caffe中的include, src复制到自己的caffe目录中,重新编译
+# 注意， 使用深度卷后confidence_threshold上升， 所以将confidence_threshold从0.25改为0.6
+```
