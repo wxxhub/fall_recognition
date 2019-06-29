@@ -12,25 +12,25 @@ using namespace fall_recognition;
 
 int main()
 {
-    std::string net_prototxt_file = "../snapshot/MobileNetSSD_deploy.prototxt";
-    std::string module_file = "../snapshot/mobilenet_iter_10000.caffemodel";
-    FallRecognition *recog = new FallRecognition(net_prototxt_file, module_file);
-    recog->setUseGPU(true);
+	std::string net_prototxt_file = "../snapshot/no_bn.prototxt";
+	std::string module_file = "../snapshot/no_bn.caffemodel";
+	FallRecognition *recog = new FallRecognition(net_prototxt_file, module_file);
+	recog->setUseGPU(true);
 
-    VideoCapture cap(0);
+	VideoCapture cap(0);
 
-    Mat image;
+	Mat image;
 
 	timer t;
-    while (cap.read(image))
-    {
+	while (cap.read(image))
+	{
 		t.reset();
 		recog->detector(image);
 		t.stop();
 		t.show();
 
 		recog->showResult(image, 10, true);
-    }
-    
-    return 0;
+	}
+	
+	return 0;
 }

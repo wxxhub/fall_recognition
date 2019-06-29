@@ -47,11 +47,15 @@ void setWarnTime(int second);
  *  wait_key cvWaitKey的时间
  *  show_all是否显示所有目标， 如果为False则只显示目标0
  */
-void showResult(cv::Mat img, int wait_key, bool show_all);
+void showResult(cv::Mat img, int wait_key = 10, bool show_all = true);
+
+/*  将没有绑定ID的识别结果可视化出来。
+ */
+void showNoIdBindResult(cv::Mat img, int wait_key = 10);
 ```
 
 ## 识别加速
-> 合并bn层，提高模型运行速度，使用MobileNet-SSD作者的脚本将bn层合并到了卷积层中，相当于bn的计算时间就被节省了，识别时间从110ms下降到64ms左右。
+> 合并bn层，提高模型运行速度，使用MobileNet-SSD作者的脚本将bn层合并到了卷积层中，相当于bn的计算时间就被节省了，识别时间从110ms下降到64ms左右。使用深度卷积后时间下降至21ms。
 
 ## 测试环境
 > i5-6300HQ + GTX-950M + Ubantu16 

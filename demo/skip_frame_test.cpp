@@ -14,8 +14,8 @@ const std::string output_video_path = "/home/wxx/Git/fall_recognition/video/resu
 
 int main()
 {
-    std::string net_prototxt_file = "../no_bn/no_bn.prototxt";
-    std::string module_file = "../no_bn/no_bn.caffemodel";
+    std::string net_prototxt_file = "../snapshot/no_bn.prototxt";
+    std::string module_file = "../snapshot/no_bn.caffemodel";
     FallRecognition *recog = new FallRecognition(net_prototxt_file, module_file);
     
     recog->setUseGPU(true);
