@@ -18,6 +18,12 @@ make -j4
 
 ## 打开摄像头识别
 ./usb_cam_demo
+
+## 跳帧测试
+./skip_frame_test
+
+## 使用深度卷积后， 在下方配置方式
+./depwise_convolution
 ```
 
 ## API说明
@@ -64,5 +70,5 @@ void showNoIdBindResult(cv::Mat img, int wait_key = 10);
 git clone https://github.com/yonghenglh6/DepthwiseConvolution.git
 
 # 将DepthwiseConvolution/caffe中的include, src复制到自己的caffe目录中,重新编译
-# 注意， 使用深度卷后confidence_threshold上升， 所以将confidence_threshold从0.25改为0.6
+# 注意， 使用深度卷积后confidence_threshold上升， 所以将confidence_threshold从0.25改为0.6
 ```
