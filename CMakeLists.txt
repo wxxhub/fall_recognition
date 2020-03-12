@@ -4,7 +4,9 @@ PROJECT(fall_recognition)
 set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 find_package(Caffe)
+find_package( OpenCV REQUIRED )
 
+include_directories( ${OpenCV_INCLUDE_DIRS} )
 include_directories(${Caffe_INCLUDE_DIRS})
 add_definitions(${Caffe_DEFINITIONS})
 
@@ -20,7 +22,7 @@ add_library(${PROJECT_NAME}
     ${DIR_LIB_SRCS}
 )
 
-target_link_libraries(${PROJECT_NAME} ${Caffe_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${Caffe_LIBRARIES} ${OpenCV_LIBS})
 
 add_executable(demo demo/demo.cpp)
 target_link_libraries(demo
