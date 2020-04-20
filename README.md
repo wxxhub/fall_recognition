@@ -1,9 +1,19 @@
 # fall_recognition  
-采用Caffe实现人识别，并实现多目标摔倒识别。
+采用Caffe实现人识别，并实现多目标摔倒识别。  
+[caffe模型网址](https://github.com/weiliu89/caffe/tree/ssd)  
 
 ## 使用
 ```shell
 #先配置OpenCV和Caffe
+# 配置caffe
+git clone https://github.com/weiliu89/caffe.git
+cd caffe
+git checkout ssd
+mkdir build
+cmake ..
+make all -j4
+make install
+make runtest
 
 # 下载项目
 git clone git@github.com:wxxhub/fall_recognition.git
